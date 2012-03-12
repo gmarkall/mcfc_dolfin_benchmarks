@@ -1,7 +1,7 @@
 from dolfin import *
 
 # Load mesh and subdomains
-mesh = Mesh("cdisk.xml")
+mesh = Mesh("../mesh/cdisk.xml")
 
 nv = mesh.num_vertices()
 print "Num vertices ", nv
@@ -14,7 +14,7 @@ for i in range(mesh.num_vertices()):
     y = coordinates[i][1]
     r = sqrt(x*x + y*y)
     if r<0.25:
-        concentration[i] = 1.0
+        concentration[i] = 0.25*(1+cos(4*pi*r))
     else:
         concentration[i] = 0.0
 
@@ -37,7 +37,7 @@ a= assemble(Mass)
 
 # params
 endtime = 1.0
-dt = 0.01
+dt = 0.00125
 t=0.0
 
 rhs = (v*u0+dt*dot(grad(v),velocity)*u0)*dx
@@ -65,7 +65,7 @@ while t < endtime:
     plot(u1)
 
     # Save the solution to file
-    out_file << (u1, t)
+    #out_file << (u1, t)
 
     # Move to next interval and adjust boundary condition
     t += dt
