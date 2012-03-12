@@ -15,7 +15,7 @@ A = 0.1      # Normalisation
 t = 0.1      # Starting time
 dt = 0.00125 # Timestep
 
-endtime = 0.2
+endtime = 0.7
 
 for i in range(mesh.num_vertices()):
     x = coordinates[i][0]+0.5
@@ -31,7 +31,7 @@ T = FunctionSpace(mesh, "CG", 1)
 V = VectorFunctionSpace(mesh, "CG", 1)
 
 # Create velocity Function
-velocity = Constant( (1.0, 0.0) )
+velocity = Constant( (5.0, 0.0) )
 
 # Initialise source function and previous solution function
 u0 = Function(T)
