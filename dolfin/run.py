@@ -11,7 +11,8 @@ mesh = "../mesh/cdisk.xml"
 
 sim = DolfinSimulation(D, A, t, dt, endtime, mesh, val)
 
+times
 for i in range(num_orders):
     order = i+1
-    sim.run(order)
-
+    time = sim.run(order, False)
+    print "Simulation time is", time

@@ -95,3 +95,5 @@ class DolfinSimulation(object):
         t_loop.stop()
         if save_output:
             out_file << (u1, t)
+
+        return t_loop.value()
