@@ -1,3 +1,6 @@
+from math import sqrt, exp, pi
+from parameters import A, D
+
 def val(X, t):
     x = X[0]+0.5
     y = X[1]
