@@ -1,14 +1,5 @@
 from dolfin import *
 
-def initial_condition(mesh, t, val):
-    nv = mesh.num_vertices()
-    coordinates = mesh.coordinates()
-    concentration = Vector(nv)
-    for i in range(nv):
-        X = coordinates[i]
-        concentration[i] = val(X, t)
-    return concentration
-
 class DolfinSimulation(object):
 
     def __init__(self, D, A, t, dt, endtime, mesh, initial):
@@ -37,11 +28,12 @@ class DolfinSimulation(object):
         # Create velocity Function
         velocity = Constant( (5.0, 0.0) )
 
-        concentration = initial_condition(mesh, t, initial)
+        concentration = Expression("0.1*(exp((-pow(sqrt(x[0]*x[0]+x[1]*x[1]),2))/(4*0.05*0.1))/(4*pi*0.05*0.1))")
 
         # Initialise source function and previous solution function
         u0 = Function(T)
-        u1 = Function(T, concentration)
+        u1 = Function(T)
+        u1.assign(concentration)
 
         # Test and trial functions
         u, v = TrialFunction(T), TestFunction(T)
