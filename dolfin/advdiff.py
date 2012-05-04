@@ -67,7 +67,8 @@ class DolfinSimulation(object):
 
             # Copy soln from prev.
             u0.assign(u1)
-            
+            print "Max:", u0.vector().max()
+
             # Advection
             t_a.start()
             M = assemble(Mass)
