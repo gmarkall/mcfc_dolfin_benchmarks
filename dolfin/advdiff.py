@@ -27,6 +27,9 @@ class DolfinSimulation(object):
         endtime = self.endtime
         mesh = self.mesh
 
+        # Added due to mesh not conforming to UFC numbering, allegedly
+        mesh.order()
+ 
         # Create FunctionSpaces
         T = FunctionSpace(mesh, "CG", order)
         V = VectorFunctionSpace(mesh, "CG", order)
@@ -73,7 +76,9 @@ class DolfinSimulation(object):
             t_a.start()
             M = assemble(Mass)
             b = assemble(adv_rhs)
-            solve(M, u1.vector(), b)
+            solve(M, u1.vector(), b,
+                  solver_parameters ={ 'linear_solver': 'cg',
+                                       'preconditioner': 'jacobi'})
             t_a.stop()
 
             # Copy solution from advection
@@ -83,7 +88,9 @@ class DolfinSimulation(object):
             t_d.start()
             M = assemble(diff_matrix)
             b = assemble(diff_rhs)
-            solve(M, u1.vector(), b)
+            solve(M, u1.vector(), b,
+                  solver_parameters ={ 'linear_solver': 'cg',
+                                       'preconditioner': 'jacobi'})
             t_d.stop()
             if save_output:
                 out_file << (u1, t)
