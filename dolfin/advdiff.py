@@ -1,5 +1,7 @@
 from dolfin import *
 
+#parameters["num_threads"] = 6
+
 class InitialCondition(Expression):
     def __init__(self, fn):
         self._fn = fn
@@ -60,8 +62,10 @@ class DolfinSimulation(object):
             out_file = File("temperature.pvd")
             out_file << (u1, t)
 
-        t_a = Timer("advection")
-        t_d = Timer("diffusion")
+        t_a_a = Timer("advection assembly")
+        t_a_s = Timer("advection solve")
+        t_d_a = Timer("diffusion assembly")
+        t_d_s = Timer("diffusion solve")
 
         t_loop = Timer("Timestepping loop")
 
@@ -73,25 +77,25 @@ class DolfinSimulation(object):
             print "Max:", u0.vector().max()
 
             # Advection
-            t_a.start()
+            t_a_a.start()
             M = assemble(Mass)
             b = assemble(adv_rhs)
-            solve(M, u1.vector(), b,
-                  solver_parameters ={ 'linear_solver': 'cg',
-                                       'preconditioner': 'jacobi'})
-            t_a.stop()
+            t_a_a.stop()
+            t_a_s.start()
+            solve(M, u1.vector(), b, "cg", "jacobi")
+            t_a_s.stop()
 
             # Copy solution from advection
             u0.assign(u1)
 
             # Diffusion
-            t_d.start()
+            t_d_a.start()
             M = assemble(diff_matrix)
             b = assemble(diff_rhs)
-            solve(M, u1.vector(), b,
-                  solver_parameters ={ 'linear_solver': 'cg',
-                                       'preconditioner': 'jacobi'})
-            t_d.stop()
+            t_d_a.stop()
+            t_d_s.start()
+            solve(M, u1.vector(), b, "cg", "jacobi")
+            t_d_s.stop()
             if save_output:
                 out_file << (u1, t)
          
@@ -99,6 +103,9 @@ class DolfinSimulation(object):
             t += dt
 
         t_loop.stop()
+
+        list_timings()
+        
         if save_output:
             out_file << (u1, t)
 
