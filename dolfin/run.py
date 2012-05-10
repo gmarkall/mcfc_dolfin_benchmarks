@@ -7,4 +7,4 @@ mesh = "../mesh/cdisk.xml"
 
 sim = DolfinSimulation(D, A, t, dt, endtime, mesh, val)
 
-sim.run(1, False)
+sim.run(1, True)

@@ -96,8 +96,8 @@ class DolfinSimulation(object):
             t_d_s.start()
             solve(M, u1.vector(), b, "cg", "jacobi")
             t_d_s.stop()
-            if save_output:
-                out_file << (u1, t)
+            #if save_output:
+            #    out_file << (u1, t)
          
             # Next timestep
             t += dt
