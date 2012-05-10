@@ -1,5 +1,5 @@
 all:
-	gmsh -2 -clscale 0.2 -o cdisk.msh cdisk.geo
+	gmsh -2 -clscale 0.32 -o cdisk.msh cdisk.geo
 	./gmsh2triangle --2d cdisk.msh
 	./dolfin-convert cdisk.msh cdisk.xml
 
