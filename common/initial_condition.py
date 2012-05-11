@@ -1,5 +1,7 @@
 from math import sqrt, exp, pi
-from parameters import A, D
+from parameters import A
+
+D = 0.05
 
 def val(X, t):
     x = X[0]+0.5
