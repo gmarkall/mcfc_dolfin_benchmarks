@@ -1,0 +1,6 @@
+set style data linespoints
+set xtics 1
+set format x "%6.0f"
+set xlabel "Number of Cores"
+set term pdfcairo
+set key inside left top nobox invert noreverse

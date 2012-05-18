@@ -1,0 +1,12 @@
+load "style.gplt"
+set output "runtime.pdf"
+set xrange [0:13]
+set yrange [0:1100]
+set y2range [0:400]
+set ylabel "seconds"
+set y2label "MFLOPS/s"
+set y2tics 50
+set title "Total values running the Dolfin adv-diff benchmark"
+plot \
+     "stats/time.csv" using 1:2 title 'Runtime',\
+     "stats/total.csv" using 1:4 title "FLOPS" axes x1y2
