@@ -1,0 +1,7 @@
+load "style.gplt"
+set output "avg-runtimes.pdf"
+set xrange [0:13]
+set yrange [0:1100]
+set title "Total values running the Dolfin adv-diff benchmark"
+plot \
+     "stats/times.txt" using 1:2 title 'Runtime'

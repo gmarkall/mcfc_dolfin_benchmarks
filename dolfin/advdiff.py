@@ -3,8 +3,8 @@ from initial_condition import val
 from parameters import *
 
 #parameters["num_threads"] = 6
-#parameters["form_compiler"]["cpp_optimize"] = True
-parameters["form_compiler"]["optimize"] = True
+parameters["form_compiler"]["cpp_optimize"] = True
+#parameters["form_compiler"]["optimize"] = False
 
 class InitialCondition(Expression):
     def __init__(self, fn):
