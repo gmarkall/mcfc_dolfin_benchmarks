@@ -1,0 +1,6 @@
+Stage Dolfin MCFC
+"Advection Assembly" 119.14 9.74
+"Diffusion Assembly" 101.61 17.48
+"Advection Solve" 7.9021 7.77
+"Diffusion Solve" 10.262 9.58
+
