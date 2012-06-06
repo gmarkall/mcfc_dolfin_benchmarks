@@ -54,6 +54,7 @@ def simulation(D, A, t, dt, endtime, mesh, initial):
 
     t_loop = Timer("Timestepping loop")
 
+    M_a, b_a, M_d, b_d = None, None, None, None
     # Time-stepping
     while t < endtime:
 
@@ -63,11 +64,11 @@ def simulation(D, A, t, dt, endtime, mesh, initial):
 
         # Advection
         t_a_a.start()
-        M = assemble(Mass)
-        b = assemble(adv_rhs)
+        M_a = assemble(Mass, tensor=M_a, reset_sparsity=(M_a is None))
+        b_a = assemble(adv_rhs, tensor=b_a, reset_sparsity=(b_a is None))
         t_a_a.stop()
         t_a_s.start()
-        solve(M, u1.vector(), b, "cg", "jacobi")
+        solve(M_a, u1.vector(), b_a, "cg", "jacobi")
         t_a_s.stop()
 
         # Copy solution from advection
@@ -75,11 +76,11 @@ def simulation(D, A, t, dt, endtime, mesh, initial):
 
         # Diffusion
         t_d_a.start()
-        M = assemble(diff_matrix)
-        b = assemble(diff_rhs)
+        M_d = assemble(diff_matrix, tensor=M_d, reset_sparsity=(M_d is None))
+        b_d = assemble(diff_rhs, tensor=b_d, reset_sparsity=(b_d is None))
         t_d_a.stop()
         t_d_s.start()
-        solve(M, u1.vector(), b, "cg", "jacobi")
+        solve(M_d, u1.vector(), b_d, "cg", "jacobi")
         t_d_s.stop()
         #if save_output:
         #    out_file << (u1, t)
@@ -98,5 +99,6 @@ def simulation(D, A, t, dt, endtime, mesh, initial):
 
 # Load mesh
 mesh = Mesh("../mesh/cdisk.xml")
+mesh.init()
 
 simulation(D, A, t, dt, endtime, mesh, val)
