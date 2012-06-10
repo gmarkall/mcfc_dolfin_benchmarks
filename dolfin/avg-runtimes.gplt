@@ -1,10 +1,10 @@
 load "style.gplt"
 set output "avg-runtimes.pdf"
 set xrange [0:13]
-set yrange [0:1100]
+set yrange [0:7500]
 set ylabel "Time (s)"
 set title "Runtimes for the adv-diff benchmark"
 plot \
      "stats/times.txt" using 1:2 title 'Dolfin', \
-     52.44 title 'MCFC CUDA Global Assembly', \
-     1027/x title 'Linear scaling'
+     7222/x title 'Linear scaling from 1 core', \
+     8894/x title 'Linear scaling from 2 cores'

@@ -44,8 +44,8 @@ def simulation(D, A, t, dt, endtime, mesh, initial):
     diff_matrix = Mass - 0.5*d
     diff_rhs = action(Mass + 0.5*d, u0)
 
-    out_file = File("temperature.pvd")
-    out_file << (u1, t)
+    #out_file = File("temperature.pvd")
+    #out_file << (u1, t)
 
     t_a_a = Timer("advection assembly")
     t_a_s = Timer("advection solve")
@@ -92,7 +92,7 @@ def simulation(D, A, t, dt, endtime, mesh, initial):
 
     list_timings()
     
-    out_file << (u1, t)
+    #out_file << (u1, t)
 
     return t_loop.value()
 
