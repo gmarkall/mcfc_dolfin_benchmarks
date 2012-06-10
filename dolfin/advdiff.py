@@ -1,8 +1,11 @@
 from dolfin import *
 from initial_condition import val
 from parameters import *
+import sys
 
-#parameters["num_threads"] = 6
+threads = int(sys.argv[1])
+print "Running with", threads, "threads"
+parameters["num_threads"] = threads
 parameters["form_compiler"]["cpp_optimize"] = True
 #parameters["form_compiler"]["optimize"] = False
 
